@@ -8,6 +8,9 @@ import pyaudio
 import audioop
 import tkinter as tk
 
+#My lib
+from anim import getImage
+
 
 CHUNK = 1024 * 4
 FORMAT = pyaudio.paInt16
@@ -81,10 +84,12 @@ titre.pack()
 valeur = tk.Label(fenetre)
 valeur.pack()
 
-photo0 = tk.PhotoImage(file='images/chat0.png')
-photo11 = tk.PhotoImage(file='images/chat11.png')
-photo12 = tk.PhotoImage(file='images/chat12.png')
-photo2 = tk.PhotoImage(file='images/chat2.png')
+imgPathList = getImage.imgList()
+
+photo0 = tk.PhotoImage(file=imgPathList[0])
+photo11 = tk.PhotoImage(file=imgPathList[1])
+photo12 = tk.PhotoImage(file=imgPathList[2])
+photo2 = tk.PhotoImage(file=imgPathList[3])
 
 labelImage = tk.Label(fenetre, image = photo0, bg = "green")
 labelImage.pack()
