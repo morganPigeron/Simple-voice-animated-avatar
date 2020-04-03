@@ -23,6 +23,7 @@ selecteur = 0
 p = pyaudio.PyAudio()
 print(p.get_device_count())
 
+
 #open audio stream
 stream = p.open(
                 format = FORMAT,
