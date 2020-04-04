@@ -3,7 +3,7 @@ import tkinter as tk
 import pyaudio
 import audioop
 
-import getImage
+from app import getImage
 
 class Application(tk.Tk):
 
@@ -16,7 +16,7 @@ class Application(tk.Tk):
         self.title("Animation")
 
         #variable anim
-        self.selector = 0
+        self.selecteur = 0
         self.CHUNK = 1024 * 4
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
@@ -37,10 +37,11 @@ class Application(tk.Tk):
         self.seuilHaut = tk.DoubleVar()
         self.seuilHaut.set(10000) #not mandatory
 
-        self.img = tk.PhotoImage() #hold image in use
+        self.img = self.imgTab[0].copy() #hold image in use
 
         #widget GUI
-        self.labelvalue = tk.Label(self, textvariable=self.micValue)
+        self.labelvalue = tk.Label(self)
+        self.labelvalue.configure(textvariable=self.micValue)
         self.labelvalue.pack()
 
         self.labelImage = tk.Label(self, image = self.img, bg = "green")
@@ -99,31 +100,44 @@ class Application(tk.Tk):
         rms = audioop.rms(data, 2)
         self.micValue.set(rms) #update gui
                 
-        
         #little image selector
         if rms <= int(self.seuilBas.get()):
-            self.img.copy(self.imgTab[0]) #TODO update self.img with new self.imgTab....
-            
+
+            self.img = self.imgTab[0]
+            self.imgRefresh()
+
+                
         elif rms >= int(self.seuilBas.get()) and rms <= int(self.seuilHaut.get()):
+
             if self.selecteur == 0:
                 self.img = self.imgTab[1]
+                self.imgRefresh()
                 self.selecteur = 1
+
             elif self.selecteur == 1:
                 self.img = self.imgTab[2]
+                self.imgRefresh()
                 self.selecteur = 0
+            
             
         else:
             self.img = self.imgTab[3]
-        
+            self.imgRefresh()
+
         #recall this function after 33 ms
-        self.after(33, self.refresh())
+        self.after(33, self.refresh)
 
     def initImage(self):
  
         self.imgTab = []
 
         for path in getImage.imgList():
-            self.imgTab.append(tk.PhotoImage(path))
+            self.imgTab.append(tk.PhotoImage(file=path))
+
+    def imgRefresh(self):
+        self.labelImage.config(image=self.img)
+
+            
         
 if __name__ == "__main__":
     app = Application()
