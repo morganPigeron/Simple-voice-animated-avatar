@@ -28,48 +28,11 @@ class Application(tk.Tk):
         #init audio stream
         self.initAudio()
         
-        #variable GUI
-        self.micValue = tk.IntVar()
-        
-        self.seuilBas = tk.DoubleVar()
-        self.seuilBas.set(1000) #not mandatory
+        #init animation box
+        self.initAnimation()
 
-        self.seuilHaut = tk.DoubleVar()
-        self.seuilHaut.set(10000) #not mandatory
-
-        self.img = self.imgTab[0].copy() #hold image in use
-
-        #widget GUI
-        self.labelvalue = tk.Label(self)
-        self.labelvalue.configure(textvariable=self.micValue)
-        self.labelvalue.pack()
-
-        self.labelImage = tk.Label(self, image = self.img, bg = "green")
-        self.labelImage.pack()
-
-        self.labelSeuilBas = tk.Label(self, text="Seuil Bas")
-        self.labelSeuilBas.pack()
-
-        self.sliderSeuilBas = tk.Scale( 
-                                self, 
-                                variable = self.seuilBas, 
-                                orient=tk.HORIZONTAL, 
-                                from_=0, to=19000,
-                                length = 256
-                                )
-        self.sliderSeuilBas.pack(anchor = tk.CENTER)
-
-        self.labelSeuilHaut = tk.Label(self, text="Seuil Haut")
-        self.labelSeuilHaut.pack()
-
-        self.sliderSeuilHaut = tk.Scale( 
-                                self,
-                                variable = self.seuilHaut,
-                                orient=tk.HORIZONTAL,
-                                from_=0, to=19000,
-                                length = 256
-                                )
-        self.sliderSeuilHaut.pack(anchor = tk.CENTER)
+        #init sound settings
+        self.initSettings()
 
     def initAudio(self):
         #object pyaudio
@@ -137,6 +100,47 @@ class Application(tk.Tk):
     def imgRefresh(self):
         self.labelImage.config(image=self.img)
 
+    def initSettings(self):
+        self.micValue = tk.IntVar()
+        
+        self.seuilBas = tk.DoubleVar()
+        self.seuilBas.set(1000) #not mandatory
+
+        self.seuilHaut = tk.DoubleVar()
+        self.seuilHaut.set(10000) #not mandatory
+
+        self.labelvalue = tk.Label(self)
+        self.labelvalue.configure(textvariable=self.micValue)
+        self.labelvalue.pack()
+
+        self.labelSeuilBas = tk.Label(self, text="Seuil Bas")
+        self.labelSeuilBas.pack()
+
+        self.sliderSeuilBas = tk.Scale( 
+                                self, 
+                                variable = self.seuilBas, 
+                                orient=tk.HORIZONTAL, 
+                                from_=0, to=19000,
+                                length = 256
+                                )
+        self.sliderSeuilBas.pack(anchor = tk.CENTER)
+
+        self.labelSeuilHaut = tk.Label(self, text="Seuil Haut")
+        self.labelSeuilHaut.pack()
+
+        self.sliderSeuilHaut = tk.Scale( 
+                                self,
+                                variable = self.seuilHaut,
+                                orient=tk.HORIZONTAL,
+                                from_=0, to=19000,
+                                length = 256
+                                )
+        self.sliderSeuilHaut.pack(anchor = tk.CENTER)
+
+    def initAnimation(self):
+        self.img = self.imgTab[0].copy() #hold image in use
+        self.labelImage = tk.Label(self, image = self.img, bg = "green")
+        self.labelImage.pack()
             
         
 if __name__ == "__main__":
