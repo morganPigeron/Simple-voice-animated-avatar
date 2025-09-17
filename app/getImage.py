@@ -11,6 +11,8 @@ def imgList():
     for image in os.listdir(imgPath):
         pathList.append(os.path.join(imgPath, image))
 
+    pathList.sort()
+    print(pathList)
     return pathList
 """
 photo0 = tk.PhotoImage(file='images/chat0.png')

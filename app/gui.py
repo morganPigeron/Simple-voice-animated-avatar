@@ -43,8 +43,7 @@ class Application(tk.Tk):
                             channels = self.CHANNELS,
                             rate = self.RATE,
                             input = True,
-                            output = True,
-                            input_device_index = 1,
+                            output = False,
                             frames_per_buffer = self.CHUNK
                             )
 
